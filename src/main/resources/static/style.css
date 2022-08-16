@@ -1,6 +1,6 @@
 @font-face {
-    font-family: 'S-CoreDream-2ExtraLight';
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-2ExtraLight.woff') format('woff');
+    font-family: 'S-CoreDream-5Medium';
+    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_six@1.2/S-CoreDream-5Medium.woff') format('woff');
     font-weight: normal;
     font-style: normal;
 }
@@ -15,5 +15,5 @@ input[type=submit] {
 }
 
 html > body {
-    font-family: "S-CoreDream-2ExtraLight";
+    font-family: "S-CoreDream-5Medium";
 }
