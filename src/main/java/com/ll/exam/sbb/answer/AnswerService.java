@@ -15,7 +15,7 @@ public class AnswerService {
     public void create(Question question, String content) {
         Answer answer = new Answer();
 
-        answer.setQuestion(question);
+        question.addAnswer(answer);
         answer.setCreateDate(LocalDateTime.now());
         answer.setContent(content);
 
