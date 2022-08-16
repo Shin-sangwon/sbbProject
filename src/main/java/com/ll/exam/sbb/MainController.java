@@ -43,6 +43,11 @@ public class MainController {
                 """;
     }
 
+    @RequestMapping("/")
+    public String root(){
+        return "redirect:/question/list";
+    }
+
     @PostMapping("/page2")
     @ResponseBody
     public String showPage2Post(@RequestParam(defaultValue = "0") int age) {
@@ -238,4 +243,6 @@ class Person {
         this.age = age;
         this.name = name;
     }
+
+
 }

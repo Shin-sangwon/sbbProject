@@ -1,12 +1,19 @@
-<table border="1">
+<table>
+    <thead>
     <tr>
-        <td>11333</td>
-        <td>11444</td>
+        <th>제목</th>
+        <th>작성일시</th>
     </tr>
-    <tr>
-        <td>22555</td>
-        <td>33333</td>
+    </thead>
+    <tbody>
+    <tr th:each="question, loop : ${questionList}">
+        <td>
+            [[${loop.count}]] / [[${loop.size}]]
+        </td>
+        <td>
+            [[${question.subject}]]
+        </td>
+        <td th:text="|Date. ${#strings.substring(question.createDate, 2, 16)}|"></td>
     </tr>
+    </tbody>
 </table>
-
-77777777777777777777
