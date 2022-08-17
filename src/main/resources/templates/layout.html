@@ -1,5 +1,8 @@
 <!doctype html>
-<html lang="ko">
+<html lang="ko"
+      xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout"
+      xmlns:th="http://www.thymeleaf.org"
+>
 <head>
     <!-- Required meta tags -->
     <meta charset="utf-8">
@@ -10,7 +13,7 @@
     <link rel="stylesheet" type="text/css" th:href="@{/style.css}">
     <title>Hello, sbb!</title>
 </head>
-<body>
+<body style="min-height:100vh;" class="d-flex flex-column">
 
 <header>
     <div class="container py-3 d-flex">
@@ -23,14 +26,18 @@
         </div>
     </div>
 </header>
+
 <!-- 기본 템플릿 안에 삽입될 내용 Start -->
-<th:block layout:fragment="content"></th:block>
+<main class="flex-grow-1">
+    <th:block layout:fragment="content"></th:block>
+</main>
 <!-- 기본 템플릿 안에 삽입될 내용 End -->
 
-<footer>
+<footer class="bg-success text-light">
     <div class="container py-3 d-flex justify-content-center">
         Copyright all rights reserved
     </div>
 </footer>
+
 </body>
 </html>
