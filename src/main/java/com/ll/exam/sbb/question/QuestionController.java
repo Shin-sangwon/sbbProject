@@ -1,5 +1,6 @@
 package com.ll.exam.sbb.question;
 
+import com.ll.exam.sbb.answer.AnswerForm;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -33,7 +34,7 @@ public class QuestionController {
     }
 
     @RequestMapping("/question/detail/{id}")
-    public String detail(Model model, @PathVariable int id){
+    public String detail(Model model, @PathVariable int id, AnswerForm answerForm){
         Question question = questionService.getQuestion(id);
 
         model.addAttribute("question", question);
@@ -42,6 +43,7 @@ public class QuestionController {
     }
 
     @GetMapping("/question/create")
+    //빈 값이라도 있어야 하므로 form 넣어주기
     public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
