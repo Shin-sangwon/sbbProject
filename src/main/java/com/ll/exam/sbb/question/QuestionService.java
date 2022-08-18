@@ -31,7 +31,9 @@ public class QuestionService {
 
     public Page<Question> getList(int page) {
         List<Sort.Order> sorts = new ArrayList<>();
+        //createDate가 같을 때, id를 사용하여 다시 정렬
         sorts.add(Sort.Order.desc("createDate"));
+        sorts.add(Sort.Order.desc("id"));
         Pageable pageable = PageRequest.of(page, 15, Sort.by(sorts));
         return this.questionRepository.findAll(pageable);
     }
