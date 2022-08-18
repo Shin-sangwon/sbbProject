@@ -23,7 +23,7 @@ public class QuestionService {
         return this.questionRepository.findAll();
     }
 
-    public Question getQuestion(int id) {
+    public Question getQuestion(Long id) {
         Optional<Question> oq = questionRepository.findById(id);
 
         return oq.orElseThrow(() -> new DataNotFoundException("없는 게시물입니다."));
