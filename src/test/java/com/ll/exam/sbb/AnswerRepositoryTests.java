@@ -4,6 +4,7 @@ import com.ll.exam.sbb.answer.Answer;
 import com.ll.exam.sbb.answer.AnswerRepository;
 import com.ll.exam.sbb.question.Question;
 import com.ll.exam.sbb.question.QuestionRepository;
+import com.ll.exam.sbb.user.SiteUser;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,7 +23,6 @@ public class AnswerRepositoryTests {
     private QuestionRepository questionRepository;
     @Autowired
     private AnswerRepository answerRepository;
-    private int lastSampleDataId;
 
     @BeforeEach
     void beforeEach() {
@@ -30,11 +30,15 @@ public class AnswerRepositoryTests {
         createSampleData();
     }
 
-    private void clearData() {
+    public static void clearData(AnswerRepository answerRepository, QuestionRepository questionRepository) {
         QuestionRepositoryTests.clearData(questionRepository);
 
         answerRepository.deleteAll(); // DELETE FROM question;
         answerRepository.truncateTable();
+    }
+
+    private void clearData() {
+        clearData(answerRepository, questionRepository);
     }
 
     private void createSampleData() {
@@ -46,11 +50,13 @@ public class AnswerRepositoryTests {
         Answer a1 = new Answer();
         a1.setContent("sbb는 질문답변 게시판 입니다.");
         a1.setCreateDate(LocalDateTime.now());
+        a1.setAuthor(new SiteUser(1L));
         q.addAnswer(a1);
 
         Answer a2 = new Answer();
         a2.setContent("sbb에서는 주로 스프링부트관련 내용을 다룹니다.");
         a2.setCreateDate(LocalDateTime.now());
+        a2.setAuthor(new SiteUser(2L));
         q.addAnswer(a2);
 
         questionRepository.save(q);

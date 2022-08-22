@@ -1,5 +1,7 @@
 package com.ll.exam.sbb;
 
+import com.ll.exam.sbb.answer.AnswerRepository;
+import com.ll.exam.sbb.question.QuestionRepository;
 import com.ll.exam.sbb.user.UserRepository;
 import com.ll.exam.sbb.user.UserService;
 import org.junit.jupiter.api.BeforeEach;
@@ -10,21 +12,47 @@ import org.springframework.boot.test.context.SpringBootTest;
 
 @SpringBootTest
 public class UserServiceTests {
+    @Autowired
+    private UserService userService;
 
     @Autowired
-    UserService userService;
-    @Autowired
-    UserRepository userRepository;
+    private UserRepository userRepository;
 
+    @Autowired
+    private AnswerRepository answerRepository;
+
+    @Autowired
+    private QuestionRepository questionRepository;
 
     @BeforeEach
-    public void TearDown() {
-        userRepository.deleteAll();
+    void beforeEach() {
+        clearData();
+        createSampleData();
     }
 
-    @DisplayName("회원 가입됨")
+    public static void createSampleData(UserService userService) {
+        userService.create("admin", "admin@test.com", "1234");
+        userService.create("user1", "user1@test.com", "1234");
+    }
+
+    private void createSampleData() {
+        createSampleData(userService);
+    }
+
+    public static void clearData(UserRepository userRepository, AnswerRepository answerRepository, QuestionRepository questionRepository) {
+        AnswerRepositoryTests.clearData(answerRepository, questionRepository);
+        QuestionRepositoryTests.clearData(questionRepository);
+        userRepository.deleteAll(); // DELETE FROM site_user;
+        userRepository.truncateTable();
+    }
+
+    private void clearData() {
+        clearData(userRepository, answerRepository, questionRepository);
+    }
+
     @Test
-    public void 회원이_가입된다() {
-        userService.create("user", "user@gmail.com", "user123");
+    @DisplayName("회원가입이 가능하다.")
+    public void t1() {
+        userService.create("user2", "user2@email.com", "1234");
     }
 }
