@@ -1,8 +1,11 @@
 package com.ll.exam.sbb.question;
 
 import com.ll.exam.sbb.answer.AnswerForm;
+import com.ll.exam.sbb.user.SiteUser;
+import com.ll.exam.sbb.user.UserService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.data.domain.Page;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 
 
 import javax.validation.Valid;
+import java.security.Principal;
 import java.util.List;
 
 @Controller
@@ -21,6 +25,7 @@ import java.util.List;
 public class QuestionController {
     // @Autowired // 필드 주입
     private final QuestionService questionService;
+    private final UserService userService;
 
     @RequestMapping("/question/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
@@ -39,21 +44,21 @@ public class QuestionController {
 
         return "question_detail";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @GetMapping("/question/create")
     //빈 값이라도 있어야 하므로 form 넣어주기
     public String questionCreate(QuestionForm questionForm) {
         return "question_form";
     }
-
+    @PreAuthorize("isAuthenticated()")
     @PostMapping("/question/create")
-    public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult) {
+    public String questionCreate(@Valid QuestionForm questionForm, BindingResult bindingResult, Principal principal) {
 
         if (bindingResult.hasErrors()) {
             return "question_form";
         }
-
-        questionService.create(questionForm.getSubject(), questionForm.getContent());
+        SiteUser siteUser = userService.getUser(principal.getName());
+        questionService.create(questionForm.getSubject(), questionForm.getContent(), siteUser);
 
         return "redirect:/question/list"; // 질문 저장후 질문목록으로 이동
     }
