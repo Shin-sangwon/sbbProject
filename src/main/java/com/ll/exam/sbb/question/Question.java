@@ -23,7 +23,7 @@ public class Question {
     @Column(columnDefinition = "TEXT")
     private String content;
     private LocalDateTime createDate;
-
+    private LocalDateTime modifyDate;
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
     private List<Answer> answerList = new ArrayList<>();
 
