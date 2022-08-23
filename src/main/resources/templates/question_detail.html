@@ -19,10 +19,11 @@
                 </div>
             </div>
             <div class="my-3">
-                <a onclick="if ( !confirm('정말로 추천하시겠습니까?') ) return false;" class="recommend btn btn-sm btn-outline-secondary"
-                   th:data-uri="@{|/question/vote/${question.id}|}">
+                <a onclick="if ( !confirm('정말로 추천하시겠습니까?') ) return false;" class="btn btn-sm btn-outline-secondary"
+                   th:href="@{|/question/vote/${question.id}|}">
                     추천
                     <span class="badge rounded-pill bg-success" th:text="${#lists.size(question.voter)}"></span>
+                </a>
                 </a>
                     <a th:href="@{|/question/modify/${question.id}|}" class="btn btn-info"
                    sec:authorize="isAuthenticated()"
@@ -55,6 +56,11 @@
                 </div>
             </div>
             <div class="my-3">
+                <a onclick="if ( !confirm('정말로 추천하시겠습니까?') ) return false;" class="btn btn-sm btn-outline-secondary"
+                   th:href="@{|/answer/vote/${answer.id}|}">
+                    추천
+                    <span class="badge rounded-pill bg-success" th:text="${#lists.size(answer.voter)}"></span>
+                </a>
                 <a th:href="@{|/answer/modify/${answer.id}|}" class="btn btn-info"
                    sec:authorize="isAuthenticated()"
                    th:if="${answer.author != null and #authentication.getPrincipal().getUsername() == answer.author.username}"
