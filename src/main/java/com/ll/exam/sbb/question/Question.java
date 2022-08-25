@@ -28,6 +28,9 @@ public class Question {
     @OneToMany(mappedBy = "question", cascade = {CascadeType.ALL})
     private List<Answer> answerList = new ArrayList<>();
 
+    @Column(columnDefinition = "Integer default 0")
+    private Integer hit = 0;
+
     @ManyToOne
     private SiteUser author;
 
@@ -35,8 +38,11 @@ public class Question {
     private Set<SiteUser> voter;
 
 
+
+
     public void addAnswer(Answer answer) {
         answer.setQuestion(this);
         getAnswerList().add(answer);
     }
+
 }

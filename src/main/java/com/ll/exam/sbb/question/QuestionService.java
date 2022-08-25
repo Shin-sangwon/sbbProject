@@ -8,6 +8,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
 import java.util.ArrayList;
@@ -19,6 +20,12 @@ import java.util.Optional;
 public class QuestionService {
 
     private final QuestionRepository questionRepository;
+
+    @Transactional
+    public int updateHit(Long id) {
+        return questionRepository.updateHit(id);
+    }
+
 
     public List<Question> getList() {
         return this.questionRepository.findAll();

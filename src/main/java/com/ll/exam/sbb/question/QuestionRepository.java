@@ -18,6 +18,10 @@ public interface QuestionRepository extends JpaRepository<Question, Long>, Repos
     List<Question> findBySubjectLike(String s);
 
     Page<Question> findAll(Pageable pageable);
+
+    @Modifying
+    @Query("update Question q set q.hit = q.hit + 1 where q.id = :id")
+    int updateHit(Long id);
     @Transactional
     @Modifying
     @Query(value = "ALTER TABLE question AUTO_INCREMENT = 1", nativeQuery = true)
