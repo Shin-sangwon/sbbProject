@@ -30,13 +30,21 @@ public class QuestionService {
         return oq.orElseThrow(() -> new DataNotFoundException("없는 게시물입니다."));
     }
 
-    public Page<Question> getList(int page) {
+    public Page<Question> getList(String kw, int page, String sortCode) {
         List<Sort.Order> sorts = new ArrayList<>();
-        //createDate가 같을 때, id를 사용하여 다시 정렬
-        sorts.add(Sort.Order.desc("createDate"));
-        sorts.add(Sort.Order.desc("id"));
-        Pageable pageable = PageRequest.of(page, 15, Sort.by(sorts));
-        return this.questionRepository.findAll(pageable);
+
+        switch (sortCode) {
+            case "OLD" -> sorts.add(Sort.Order.asc("id")); // 오래된순
+            default -> sorts.add(Sort.Order.desc("id")); // 최신순
+        }
+
+        Pageable pageable = PageRequest.of(page, 10, Sort.by(sorts)); // 한 페이지에 10까지 가능
+
+        if ( kw == null || kw.trim().length() == 0 ) {
+            return questionRepository.findAll(pageable);
+        }
+
+        return questionRepository.findDistinctBySubjectContainsOrContentContainsOrAuthor_usernameContainsOrAnswerList_contentContainsOrAnswerList_author_username(kw, kw, kw, kw, kw, pageable);
     }
 
     public void create(String subject, String content, SiteUser user) {

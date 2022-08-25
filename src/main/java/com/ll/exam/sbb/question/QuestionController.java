@@ -29,11 +29,15 @@ public class QuestionController {
     private final QuestionService questionService;
     private final UserService userService;
 
-    @RequestMapping("/question/list")
+    @GetMapping("/question/list")
     // 이 자리에 @ResponseBody가 없으면 resources/question_list/question_list.html 파일을 뷰로 삼는다.
-    public String list(Model model, @RequestParam(value="page", defaultValue="0") int page) {
-        Page<Question> paging = this.questionService.getList(page);
+    public String list(String kw, @RequestParam(defaultValue = "") String sortCode, Model model, @RequestParam(defaultValue = "0") int page) {
+        Page<Question> paging = questionService.getList(kw, page, sortCode);
+
+        // 미래에 실행된 question_list.html 에서
+        // questionList 라는 이름으로 questionList 변수를 사용할 수 있다.
         model.addAttribute("paging", paging);
+        model.addAttribute("kw", kw);
 
         return "question_list";
     }
